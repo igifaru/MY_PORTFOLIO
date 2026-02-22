@@ -1,0 +1,9 @@
+# .gitignore
+venv/
+myport_env/
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+.env

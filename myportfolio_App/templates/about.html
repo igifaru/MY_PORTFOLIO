@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Me | [Your Name]</title>
+    <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}"> <!-- Global styles -->
+    <link rel="stylesheet" href="{% static 'myportfolio_App/css/about.css' %}"> <!-- Specific styles -->
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="{% url 'home' %}"
+                style="text-decoration:none; color:inherit;">PORTFOLIO<span>.</span></a></div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Work</a></li>
+            <li><a href="{% url 'about' %}" class="active">About</a></li>
+            <li><a href="{% url 'contact' %}" class="btn-contact">Hire Me</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="about-hero">
+            <div class="bio-content">
+                <h1 class="section-title">The Developer Behind the Code</h1>
+                <p class="bio-text">
+                    I am a passionate Full Stack Developer with a deep interest in building scalable web applications.
+                    With a background in **Python** and **Django**, I enjoy solving complex logic problems and
+                    turning them into seamless user experiences.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="view-link">GitHub</a> • <a href="#" class="view-link">LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="skills-grid">
+                {% for skill in skills %}
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-perc">{{ skill.proficiency }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ skill.proficiency }}%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

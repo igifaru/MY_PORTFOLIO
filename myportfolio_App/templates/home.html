@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio | [Your Name]</title>
+    <!-- Link your separate CSS file -->
+    <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}">
+</head>
+
+<body>
+    <!-- Header/Navigation -->
+    <nav class="navbar">
+        <div class="logo">PORTFOLIO<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#projects">Work</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}" class="btn-contact">Hire Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1 class="hero-title">Building Digital Logic.</h1>
+        <p class="hero-subtitle">Full Stack Developer specializing in high-performance Django applications and elegant
+            user experiences.</p>
+        <div class="hero-btns">
+            <a href="#projects" class="btn-primary">View My Projects</a>
+            <a href="#" class="btn-secondary">Download CV</a>
+        </div>
+    </header>
+
+    <!-- Project Grid Section -->
+    <main id="projects" class="container">
+        <h2 class="section-title">Featured Work</h2>
+
+        <div class="project-grid">
+            {% for project in projects %}
+            <article class="project-card">
+                <div class="project-image">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                    <div class="placeholder">No Image Available</div>
+                    {% endif %}
+                </div>
+
+                <div class="project-content">
+                    <span class="badge">{{ project.technology }}</span>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:15 }}</p>
+
+                    <div class="project-footer">
+                        <a href="{{ project.link }}" class="view-link" target="_blank">View Project &rarr;</a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <p class="no-projects">No projects added yet. Head to the <a href="/admin">Admin panel</a> to add some!</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 [Your Name]. Built with Django & Passion.</p>
+    </footer>
+</body>
+
+</html>

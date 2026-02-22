@@ -1,0 +1,293 @@
+/* myportfolio_App/static/myportfolio_App/css/home.css */
+
+:root {
+    --bg-dark: #020617;
+    /* Slate-950 */
+    --card-bg: #0f172a;
+    /* Slate-900 */
+    --accent: #22d3ee;
+    /* Cyan-400 */
+    --text-main: #f8fafc;
+    /* Slate-50 */
+    --text-muted: #94a3b8;
+    /* Slate-400 */
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--accent), #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.project-card {
+    background-color: var(--card-bg);
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.badge {
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+}
+
+
+
+/* --- Navigation Styles --- */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 10%;
+    background-color: rgba(2, 6, 23, 0.8);
+    /* Semi-transparent Slate-950 */
+    backdrop-filter: blur(10px);
+    /* Modern frosted glass effect */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #1e293b;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--accent);
+    /* That Cyan-400 color */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: var(--accent);
+}
+
+/* --- Navigation Button --- */
+
+.btn-contact {
+    background-color: var(--accent);
+    color: var(--bg-dark) !important;
+    /* Contrast text */
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    transition: transform 0.2s ease, background-color 0.3s ease !important;
+}
+
+.btn-contact:hover {
+    background-color: #06b6d4;
+    /* Darker Cyan */
+    transform: translateY(-2px);
+}
+
+/* Smooth scroll adjustment for sticky nav */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+
+
+/* --- 1. Hero Section Layout --- */
+.hero {
+    height: 85vh;
+    /* Large impactful height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 70%);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    line-height: 1.6;
+    margin: 1.5rem 0 2.5rem 0;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+    background-color: #06b6d4;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2);
+}
+
+.btn-secondary {
+    border: 1px solid #334155;
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- 2. Project Grid & Section Title --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--accent);
+    margin-top: 10px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+/* --- 3. Project Card Styling --- */
+.project-card {
+    background-color: var(--card-bg);
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project-image {
+    width: 100%;
+    height: 220px;
+    background-color: #020617;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Keeps aspect ratio clean */
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.1);
+}
+
+.project-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-content h3 {
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+.project-content p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+/* --- 4. Card Details --- */
+.badge {
+    display: inline-block;
+    color: var(--accent);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    background: rgba(34, 211, 238, 0.05);
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.view-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: margin-left 0.3s ease;
+}
+
+.view-link:hover {
+    margin-left: 5px;
+}
+
+/* --- 5. Footer --- */
+.footer {
+    padding: 4rem 0;
+    text-align: center;
+    border-top: 1px solid #1e293b;
+    color: var(--text-muted);
+}
