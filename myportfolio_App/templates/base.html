@@ -33,7 +33,13 @@
     <nav class="navbar">
         <div class="logo"><a href="{% url 'home' %}"
                 style="text-decoration:none; color:inherit;">PORTFOLIO<span>.</span></a></div>
-        <ul class="nav-links">
+
+        <!-- Mobile Menu Toggle -->
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="{% url 'home' %}" id="nav-home">Home</a></li>
             <li><a href="{% url 'about' %}" id="nav-about">About</a></li>
             <li><a href="{% url 'services' %}" id="nav-services">Services</a></li>
@@ -76,26 +82,67 @@
 
     {% block content %}{% endblock %}
 
-    <!-- Simple Footer -->
+    <!-- Premium Footer -->
     <footer class="footer">
-        <p>&copy; 2024 NDUNGUTSE David. Built with Django & Passion.</p>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">NDUNGUTSE<span>.</span></div>
+                <p class="footer-tagline">Building the next generation of digital excellence with clean code and
+                    cutting-edge performance.</p>
+                <div class="footer-socials">
+                    {% if bio.facebook_link %}<a href="{{ bio.facebook_link }}" target="_blank"><i
+                            class="fab fa-facebook-f"></i></a>{% endif %}
+                    {% if bio.twitter_link %}<a href="{{ bio.twitter_link }}" target="_blank"><i
+                            class="fab fa-twitter"></i></a>{% endif %}
+                    {% if bio.instagram_link %}<a href="{{ bio.instagram_link }}" target="_blank"><i
+                            class="fab fa-instagram"></i></a>{% endif %}
+                    {% if bio.linkedin_link %}<a href="{{ bio.linkedin_link }}" target="_blank"><i
+                            class="fab fa-linkedin-in"></i></a>{% endif %}
+                    {% if bio.github_link %}<a href="{{ bio.github_link }}" target="_blank"><i
+                            class="fab fa-github"></i></a>{% endif %}
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NDUNGUTSE David. All Rights Reserved.</p>
+                <div class="footer-scroll-top" id="scroll-top">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <!-- Theme Transition & Logic -->
+    <!-- Scripts -->
     <script>
         (function () {
             const themeToggle = document.getElementById('theme-toggle');
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            const scrollTop = document.getElementById('scroll-top');
             const html = document.documentElement;
 
-            // Toggle Theme Function
-            function toggleTheme() {
-                const isLight = html.classList.toggle('light-mode');
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            // Theme Toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const isLight = html.classList.toggle('light-mode');
+                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                });
             }
 
-            // Click listener
-            if (themeToggle) {
-                themeToggle.addEventListener('click', toggleTheme);
+            // Mobile Menu
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                });
+            }
+
+            // Scroll to Top
+            if (scrollTop) {
+                scrollTop.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
             }
         })();
     </script>
