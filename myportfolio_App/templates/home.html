@@ -9,13 +9,12 @@
     <div class="hero-container">
         <!-- Left Side: Text Content -->
         <div class="hero-content">
-            <h3 class="hero-greeting">{{ bio.hero_title|default:"Hello, It's Me" }}</h3>
-            <h1 class="hero-name">{{ bio.full_name|default:"NDUNGUTSE David" }}</h1>
+            <h3 class="hero-greeting">{{ bio.hero_title }}</h3>
+            <h1 class="hero-name">{{ bio.full_name }}</h1>
             <h3 class="hero-role-wrapper">And I'm a <span class="typing-text"
-                    data-roles="{{ bio.roles_list|default:'Frontend Developer, Backend Enthusiast' }}"></span><span
-                    class="pen-icon"><i class="fas fa-pen"></i></span></h3>
-            <p class="hero-description">{{ bio.hero_subtitle|default:"Full Stack Developer specializing in
-                high-performance Django applications and elegant user experiences." }}</p>
+                    data-roles="{{ bio.roles_list }}"></span><span class="pen-icon"><i class="fas fa-pen"></i></span>
+            </h3>
+            <p class="hero-description">{{ bio.hero_subtitle }}</p>
 
             <!-- Social Media Icons -->
             <div class="social-icons">
@@ -92,7 +91,7 @@
 
     // Typewriter and Pen Animation Logic
     const typingSpan = document.querySelector('.typing-text');
-    const rolesStr = typingSpan.dataset.roles;
+    const rolesStr = typingSpan.dataset.roles || "Developer";
     const roles = rolesStr.split(',').map(role => role.trim());
     let roleIndex = 0;
     let charIndex = 0;

@@ -24,13 +24,13 @@
 
             <!-- Right Side: Text Content -->
             <div class="bio-content">
-                <h1 class="about-title">{{ bio.about_title_main|default:"About" }} <span>{{
-                        bio.about_title_accent|default:"Me" }}</span></h1>
-                <h2 class="about-role">{{ bio.about_role|default:"Full Stack Developer!" }}</h2>
+                <h1 class="about-title">{{ bio.about_title_main }} <span>{{ bio.about_title_accent }}</span></h1>
+                <h2 class="about-role">{{ bio.about_role }}</h2>
 
                 <div class="bio-text-wrapper">
-                    <p class="bio-text">{{ bio.bio_text|default:"I am a passionate developer focusing on building
-                        elegant, scalable digital solutions." }}</p>
+                    <p class="bio-text">
+                        {{ bio.bio_text }}
+                    </p>
                 </div>
 
                 <div class="about-btns">

@@ -1,0 +1,109 @@
+/* project_detail.css */
+
+.project-detail-container {
+    padding: 4rem 10%;
+    min-height: 80vh;
+}
+
+.project-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-bottom: 4rem;
+}
+
+.project-image-box {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.project-image-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.project-info h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.project-info .badge {
+    display: inline-block;
+    color: var(--accent);
+    background: rgba(34, 211, 238, 0.1);
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border: 1px solid var(--accent);
+}
+
+.short-desc {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.long-desc {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.project-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-live {
+    padding: 1rem 2.5rem;
+    background-color: var(--accent);
+    color: var(--bg-dark);
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-live:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(34, 211, 238, 0.4);
+}
+
+.btn-back {
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-back:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+    .project-hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .project-info h1 {
+        font-size: 2.5rem;
+    }
+}
