@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),  # This maps the root of the app to the home view
     path('about/', views.about, name='about'),
+    path('services/', views.services, name='services'),
+    path('portfolio/', views.portfolio, name='portfolio'),
+    path('project/<int:pk>/', views.project_detail, name='project_detail'),
     path('contact/', views.contact, name='contact'),
     
 ]

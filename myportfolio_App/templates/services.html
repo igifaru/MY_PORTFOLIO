@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Services | NDUNGUTSE David{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="services-header">
+        <h1 class="services-title">Our <span>Services</span></h1>
+    </div>
+
+    <div class="services-grid">
+        {% for service in services %}
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="{{ service.icon_class }}"></i>
+            </div>
+            <h3 class="service-name">{{ service.title }}</h3>
+            <p class="service-description">{{ service.description }}</p>
+            <a href="{% url 'contact' %}" class="btn-read-more">Enquire Now</a>
+        </div>
+        {% empty %}
+        <div class="no-services">
+            <p>No services listed yet. Add some in the <a href="/admin">Admin panel</a>!</p>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('nav-services').classList.add('active');
+</script>
+{% endblock %}

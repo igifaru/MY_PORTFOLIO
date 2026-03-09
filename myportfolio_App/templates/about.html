@@ -1,57 +1,74 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>About Me | [Your Name]</title>
-    <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}"> <!-- Global styles -->
-    <link rel="stylesheet" href="{% static 'myportfolio_App/css/about.css' %}"> <!-- Specific styles -->
-</head>
+{% block title %}About Me | NDUNGUTSE David{% endblock %}
 
-<body>
-    <nav class="navbar">
-        <div class="logo"><a href="{% url 'home' %}"
-                style="text-decoration:none; color:inherit;">PORTFOLIO<span>.</span></a></div>
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Work</a></li>
-            <li><a href="{% url 'about' %}" class="active">About</a></li>
-            <li><a href="{% url 'contact' %}" class="btn-contact">Hire Me</a></li>
-        </ul>
-    </nav>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/about.css' %}">
+{% endblock %}
 
-    <main class="container">
-        <section class="about-hero">
+{% block content %}
+<main class="container">
+    <section class="about-hero">
+        <div class="bio-grid">
+            <!-- Left Side: Profile Image with Hexagon -->
+            <div class="bio-image">
+                <div class="hexagon-shape">
+                    {% if bio.profile_image %}
+                    <img src="{{ bio.profile_image.url }}" alt="{{ bio.full_name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400" alt="Profile">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Side: Text Content -->
             <div class="bio-content">
-                <h1 class="section-title">The Developer Behind the Code</h1>
-                <p class="bio-text">
-                    I am a passionate Full Stack Developer with a deep interest in building scalable web applications.
-                    With a background in **Python** and **Django**, I enjoy solving complex logic problems and
-                    turning them into seamless user experiences.
-                </p>
-                <div class="social-links">
-                    <a href="#" class="view-link">GitHub</a> • <a href="#" class="view-link">LinkedIn</a>
+                <h1 class="about-title">{{ bio.about_title_main|default:"About" }} <span>{{
+                        bio.about_title_accent|default:"Me" }}</span></h1>
+                <h2 class="about-role">{{ bio.about_role|default:"Full Stack Developer!" }}</h2>
+
+                <div class="bio-text-wrapper">
+                    <p class="bio-text">{{ bio.bio_text|default:"I am a passionate developer focusing on building
+                        elegant, scalable digital solutions." }}</p>
+                </div>
+
+                <div class="about-btns">
+                    <a href="#skills" class="btn-read-more">Read More</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="skills-section">
-            <h2 class="section-title">Technical Arsenal</h2>
-            <div class="skills-grid">
-                {% for skill in skills %}
-                <div class="skill-card">
-                    <div class="skill-info">
-                        <span class="skill-name">{{ skill.name }}</span>
-                        <span class="skill-perc">{{ skill.proficiency }}%</span>
+    <section id="skills" class="skills-section">
+        <h2 class="section-title">Technical Arsenal</h2>
+
+        <div class="skills-grid">
+            {% for category in categories %}
+            <div class="category-column">
+                <h3 class="category-label">{{ category.name }}</h3>
+                <div class="skills-stack">
+                    {% for skill in category.skills.all %}
+                    <div class="skill-card">
+                        <div class="skill-info">
+                            <span class="skill-name">{{ skill.name|title }}</span>
+                            <span class="skill-perc">{{ skill.proficiency }}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="--proficiency: {{ skill.proficiency }}%;"></div>
+                        </div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ skill.proficiency }}%;"></div>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </section>
-    </main>
-</body>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}
 
-</html>
+{% block extra_js %}
+<script>
+    document.getElementById('nav-about').classList.add('active');
+</script>
+{% endblock %}

@@ -1,53 +1,40 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Contact Me | [Your Name]</title>
-    <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}">
-    <link rel="stylesheet" href="{% static 'myportfolio_App/css/contact.css' %}">
-</head>
+{% block title %}Contact Me | NDUNGUTSE David{% endblock %}
 
-<body>
-    <nav class="navbar">
-        <div class="logo"><a href="{% url 'home' %}"
-                style="text-decoration:none; color:inherit;">PORTFOLIO<span>.</span></a></div>
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Work</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-        </ul>
-    </nav>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/contact.css' %}">
+{% endblock %}
 
-    <main class="container contact-container">
-        <div class="contact-header">
-            <h1 class="section-title">Get In Touch</h1>
-            <p>Have a project in mind or just want to say hi? My inbox is always open.</p>
+{% block content %}
+<main class="container contact-container">
+    <div class="contact-header">
+        <h1 class="section-title">Contact <span>Me!</span></h1>
+    </div>
+
+    <form method="POST" class="contact-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="phone" placeholder="Mobile Number">
+            </div>
+            <div class="form-group">
+                <input type="text" name="subject" placeholder="Email Subject" required>
+            </div>
         </div>
-
-        <form method="POST" class="contact-form">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="name" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" placeholder="john@example.com" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Subject</label>
-                <input type="text" name="subject" placeholder="Project Inquiry" required>
-            </div>
-            <div class="form-group">
-                <label>Message</label>
-                <textarea name="message" rows="6" placeholder="Tell me about your project..." required></textarea>
-            </div>
-            <button type="submit" class="btn-primary">Send Message</button>
-        </form>
-    </main>
-</body>
-
-</html>
+        <div class="form-group full-width">
+            <textarea name="message" rows="8" placeholder="Your Message" required></textarea>
+        </div>
+        <div class="form-submit">
+            <button type="submit" class="btn-send">Send Message</button>
+        </div>
+    </form>
+</main>
+{% endblock %}

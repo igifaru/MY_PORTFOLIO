@@ -1,30 +1,134 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Project, Skill, ContactMessage
+from .models import Project, Skill, Category, ContactMessage, Bio, Service
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    # Displays these columns in the list view
-    list_display = ('title', 'technology', 'display_image')
-    search_fields = ('title', 'technology')
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon_class', 'order')
+    list_editable = ('order',)
     
-    # Shows a small preview of the project image in the admin list
-    def display_image(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="width: 50px; height:auto; border-radius:5px;" />', obj.image.url)
-        return "No Image"
-    display_image.short_description = 'Preview'
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }
 
+# --- Admin Customization (Branding) ---
+admin.site.site_header = "Portfolio CMS"
+admin.site.site_title = "David's Portfolio Admin"
+admin.site.index_title = "Welcome to your Website Manager"
+
+# --- 1. Skills Inline for Categories ---
+class SkillInline(admin.TabularInline):
+    model = Skill
+    extra = 1 # Allow adding new skills directly
+    min_num = 0
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'skill_count')
+    search_fields = ('name',)
+    inlines = [SkillInline]
+
+    def skill_count(self, obj):
+        return obj.skills.count()
+    skill_count.short_description = "Skills count"
+
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }
+
+# --- 2. Skills ---
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'proficiency')
-    list_filter = ('category',) # Allows filtering by Frontend/Backend
+    list_filter = ('category',)
     search_fields = ('name',)
 
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }
+
+# --- 3. Projects ---
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'technology', 'display_image', 'link_exists')
+    list_filter = ('technology',)
+    search_fields = ('title', 'technology', 'description')
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'description', 'long_description', 'technology'),
+        }),
+        ('Media & Links', {
+            'fields': ('image', 'link'),
+            'description': 'Upload your project preview and provided a live URL or repository link.'
+        }),
+    )
+
+    def display_image(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="width: 50px; height:auto; border-radius:5px; border: 1px solid #ddd;" />', obj.image.url)
+        return "No Image"
+    display_image.short_description = 'Preview'
+
+    def link_exists(self, obj):
+        return bool(obj.link)
+    link_exists.boolean = True
+    link_exists.short_description = 'Live Link'
+
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }
+
+# --- 4. Contact Messages (Read-Only) ---
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    # Messages should be read-only in most cases to prevent accidental editing
     list_display = ('name', 'subject', 'email', 'created_at')
-    readonly_fields = ('name', 'email', 'subject', 'message', 'created_at')
-    search_fields = ('name', 'email', 'subject')
-    list_per_page = 20
+    
+    def has_add_permission(self, request):
+        return False
+    
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }
+    
+# --- 5. Bio / About Section ---
+@admin.register(Bio)
+class BioAdmin(admin.ModelAdmin):
+    list_display = ('title', 'has_image')
+    
+    fieldsets = (
+        ('Hero Section (Home Page)', {
+            'fields': ('full_name', 'roles_list', 'hero_title', 'hero_subtitle'),
+        }),
+        ('About Section (About Page)', {
+            'fields': ('about_title_main', 'about_title_accent', 'about_role', 'bio_text'),
+            'classes': ('wide',),
+        }),
+        ('Visuals & Experience', {
+            'fields': ('profile_image', 'cv'),
+            'description': 'This image and CV will be accessible from your about and home sections.'
+        }),
+        ('Social Connections', {
+            'fields': ('github_link', 'linkedin_link', 'facebook_link', 'twitter_link', 'instagram_link'),
+            'description': 'Links to your professional and social profiles.'
+        }),
+    )
+
+    def has_image(self, obj):
+        return bool(obj.profile_image)
+    has_image.boolean = True
+    has_image.short_description = "Photo Uploaded"
+
+    # Singleton-style: allow only one record to be created
+    def has_add_permission(self, request):
+        return not Bio.objects.exists()
+
+    class Media:
+        css = {
+            'all': ('myportfolio_App/css/admin_custom.css',)
+        }

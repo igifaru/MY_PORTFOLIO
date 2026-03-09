@@ -1,55 +1,249 @@
-.about-hero {
-    padding: 60px 0;
-    border-bottom: 1px solid #1e293b;
-    margin-bottom: 60px;
+/* --- THE IMPROVED GRID --- */
+
+.skills-section {
+    padding-top: 2rem;
 }
 
-.bio-text {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--text-muted);
-    max-width: 800px;
+.category-column {
+    margin-bottom: 2.5rem;
 }
 
+.category-label {
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 2rem;
+    display: block;
+    border-bottom: 1px solid rgba(34, 211, 238, 0.1);
+    padding-bottom: 10px;
+}
+
+/* --- THE ACTUAL GRID --- */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    /* Forces 3 columns on desktop as requested */
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 2rem;
+    /* Spacing between columns */
+    width: 100%;
+    align-items: start;
+}
+
+.skills-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .skill-card {
     background: var(--card-bg);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-color);
+    max-width: 100%;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    background: var(--nav-bg);
 }
 
 .skill-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .skill-name {
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 1rem;
     color: var(--text-main);
 }
 
 .skill-perc {
     color: var(--accent);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
 }
 
+/* --- Progress Bar --- */
 .progress-bar {
     width: 100%;
-    height: 6px;
-    background: #1e293b;
-    border-radius: 10px;
+    height: 10px;
+    background: var(--bg-dark);
+    border-radius: 20px;
     overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color);
 }
 
 .progress-fill {
     height: 100%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
+    background: linear-gradient(90deg, var(--accent), #3b82f6);
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+    border-radius: 20px;
+
+    /* Start at 0 for animation */
+    width: 0;
+    animation: slideProgress 1.5s cubic-bezier(0.1, 0.5, 0.5, 1) forwards;
+}
+
+/* --- Animation --- */
+@keyframes slideProgress {
+    from {
+        width: 0;
+    }
+
+    to {
+        /* This pulls the value from style="--proficiency: {{skill}}%" in HTML */
+        width: var(--proficiency);
+    }
+}
+
+/* --- BIO SECTION ENHANCEMENTS --- */
+.about-hero {
+    margin-bottom: 6rem;
+    padding-top: 4rem;
+}
+
+.bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.bio-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hexagon-shape {
+    width: 380px;
+    height: 420px;
+    background-color: var(--accent);
+    position: relative;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: floatImage 4s ease-in-out infinite;
+    box-shadow: 0 0 50px rgba(34, 211, 238, 0.4);
+}
+
+.hexagon-shape img {
+    width: 95%;
+    height: 95%;
+    object-fit: cover;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    background-color: var(--card-bg);
+}
+
+@keyframes floatImage {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.bio-content {
+    text-align: left;
+}
+
+.about-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.about-title span {
+    color: var(--accent);
+}
+
+.about-role {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+}
+
+.bio-text-wrapper {
+    margin-bottom: 2.5rem;
+}
+
+.bio-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.btn-read-more {
+    display: inline-block;
+    padding: 0.8rem 2.5rem;
+    background-color: var(--accent);
+    color: var(--bg-dark);
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+.btn-read-more:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 1024px) {
+    .bio-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .bio-image {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .bio-text-wrapper {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr !important;
+    }
 }

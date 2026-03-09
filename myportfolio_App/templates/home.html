@@ -1,72 +1,129 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | [Your Name]</title>
-    <!-- Link your separate CSS file -->
-    <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}">
-</head>
+{% block title %}Home | NDUNGUTSE David{% endblock %}
 
-<body>
-    <!-- Header/Navigation -->
-    <nav class="navbar">
-        <div class="logo">PORTFOLIO<span>.</span></div>
-        <ul class="nav-links">
-            <li><a href="#projects">Work</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'contact' %}" class="btn-contact">Hire Me</a></li>
-        </ul>
-    </nav>
+{% block content %}
+<!-- Hero Section -->
+<header class="hero">
+    <div class="hero-container">
+        <!-- Left Side: Text Content -->
+        <div class="hero-content">
+            <h3 class="hero-greeting">{{ bio.hero_title|default:"Hello, It's Me" }}</h3>
+            <h1 class="hero-name">{{ bio.full_name|default:"NDUNGUTSE David" }}</h1>
+            <h3 class="hero-role-wrapper">And I'm a <span class="typing-text"
+                    data-roles="{{ bio.roles_list|default:'Frontend Developer, Backend Enthusiast' }}"></span><span
+                    class="pen-icon"><i class="fas fa-pen"></i></span></h3>
+            <p class="hero-description">{{ bio.hero_subtitle|default:"Full Stack Developer specializing in
+                high-performance Django applications and elegant user experiences." }}</p>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <h1 class="hero-title">Building Digital Logic.</h1>
-        <p class="hero-subtitle">Full Stack Developer specializing in high-performance Django applications and elegant
-            user experiences.</p>
-        <div class="hero-btns">
-            <a href="#projects" class="btn-primary">View My Projects</a>
-            <a href="#" class="btn-secondary">Download CV</a>
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                {% if bio.facebook_link %}<a href="{{ bio.facebook_link }}" target="_blank"><i
+                        class="fab fa-facebook-f"></i></a>{% endif %}
+                {% if bio.twitter_link %}<a href="{{ bio.twitter_link }}" target="_blank"><i
+                        class="fab fa-twitter"></i></a>{% endif %}
+                {% if bio.instagram_link %}<a href="{{ bio.instagram_link }}" target="_blank"><i
+                        class="fab fa-instagram"></i></a>{% endif %}
+                {% if bio.linkedin_link %}<a href="{{ bio.linkedin_link }}" target="_blank"><i
+                        class="fab fa-linkedin-in"></i></a>{% endif %}
+                {% if bio.github_link %}<a href="{{ bio.github_link }}" target="_blank"><i
+                        class="fab fa-github"></i></a>{% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hero-btns">
+                {% if bio.cv %}
+                <a href="{{ bio.cv.url }}" class="btn-cv" download>Download CV</a>
+                {% else %}
+                <a href="{% url 'contact' %}" class="btn-cv">Hire Me</a>
+                {% endif %}
+            </div>
         </div>
-    </header>
 
-    <!-- Project Grid Section -->
-    <main id="projects" class="container">
-        <h2 class="section-title">Featured Work</h2>
+        <!-- Right Side: Profile Image -->
+        <div class="hero-image-wrapper">
+            <div class="hexagon-shape">
+                {% if bio.profile_image %}
+                <img src="{{ bio.profile_image.url }}" alt="{{ bio.full_name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/400" alt="Profile">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
 
-        <div class="project-grid">
-            {% for project in projects %}
-            <article class="project-card">
-                <div class="project-image">
-                    {% if project.image %}
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
-                    {% else %}
-                    <div class="placeholder">No Image Available</div>
-                    {% endif %}
-                </div>
+<!-- Project Grid Section -->
+<main id="projects" class="container">
+    <h2 class="section-title">Latest <span>Project</span></h2>
 
-                <div class="project-content">
-                    <span class="badge">{{ project.technology }}</span>
+    <div class="project-grid">
+        {% for project in projects %}
+        <div class="portfolio-item">
+            <div class="portfolio-image">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% else %}
+                <img src="https://via.placeholder.com/600x400" alt="Placeholder">
+                {% endif %}
+            </div>
+            <div class="portfolio-overlay">
+                <div class="overlay-content">
                     <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:15 }}</p>
-
-                    <div class="project-footer">
-                        <a href="{{ project.link }}" class="view-link" target="_blank">View Project &rarr;</a>
-                    </div>
+                    <p>{{ project.description|truncatewords:20 }}</p>
+                    <a href="{% url 'project_detail' project.pk %}" class="portfolio-link">
+                        <i class="fas fa-eye"></i>
+                    </a>
                 </div>
-            </article>
-            {% empty %}
-            <p class="no-projects">No projects added yet. Head to the <a href="/admin">Admin panel</a> to add some!</p>
-            {% endfor %}
+            </div>
         </div>
-    </main>
+        {% empty %}
+        <p class="no-projects">No projects added yet. Head to the <a href="/admin">Admin panel</a> to add some!</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
 
-    <!-- Simple Footer -->
-    <footer class="footer">
-        <p>&copy; 2024 [Your Name]. Built with Django & Passion.</p>
-    </footer>
-</body>
+{% block extra_js %}
+<script>
+    // Set active nav link
+    document.getElementById('nav-home').classList.add('active');
 
-</html>
+    // Typewriter and Pen Animation Logic
+    const typingSpan = document.querySelector('.typing-text');
+    const rolesStr = typingSpan.dataset.roles;
+    const roles = rolesStr.split(',').map(role => role.trim());
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function typeEffect() {
+        const currentRole = roles[roleIndex];
+
+        if (isDeleting) {
+            typingSpan.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50;
+        } else {
+            typingSpan.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 150;
+        }
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            typeSpeed = 3000; // Pause at end
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+    }
+
+    typeEffect();
+</script>
+{% endblock %}

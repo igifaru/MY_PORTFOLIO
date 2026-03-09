@@ -1,0 +1,93 @@
+/* myportfolio_App/static/myportfolio_App/css/admin_custom.css */
+
+:root {
+    --primary: #22d3ee;
+    --primary-fg: #020617;
+}
+
+#header {
+    background: #0f172a !important;
+    border-bottom: 2px solid var(--primary);
+    color: #f8fafc;
+}
+
+#header a:link,
+#header a:visited {
+    color: var(--primary);
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: #1e293b !important;
+    color: var(--primary) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+div.breadcrumbs {
+    background: #020617 !important;
+    padding: 10px 40px !important;
+    border-bottom: 1px solid #1e293b;
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    background: var(--primary) !important;
+    color: var(--primary-fg) !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    transition: all 0.3s ease;
+}
+
+.button:hover,
+input[type=submit]:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.module {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #1e293b !important;
+    background: #0f172a !important;
+}
+
+fieldset {
+    border-bottom: 1px solid #1e293b !important;
+    padding: 20px !important;
+}
+
+legend {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+
+.aligned label {
+    color: #94a3b8 !important;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=number],
+textarea,
+select {
+    background: #020617 !important;
+    border: 1px solid #334155 !important;
+    color: #f8fafc !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary) !important;
+    outline: none;
+}

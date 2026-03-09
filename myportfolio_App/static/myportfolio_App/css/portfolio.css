@@ -1,0 +1,115 @@
+/* portfolio.css */
+
+.portfolio-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-top: 2rem;
+}
+
+.portfolio-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.portfolio-title span {
+    color: var(--accent);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.portfolio-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background-color: var(--card-bg);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.portfolio-image {
+    width: 100%;
+    height: 100%;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* On hover, scale image slightly */
+.portfolio-item:hover .portfolio-image img {
+    transform: scale(1.1);
+}
+
+/* Overlay Styling */
+.portfolio-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, var(--accent) 0%, rgba(34, 211, 238, 0.2) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+    opacity: 0;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.overlay-content h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.overlay-content p {
+    font-size: 1rem;
+    color: #eee;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.portfolio-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    color: var(--accent);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    transition: var(--transition);
+}
+
+.portfolio-link:hover {
+    transform: scale(1.1) rotate(360deg);
+}
+
+@media (max-width: 768px) {
+    .portfolio-title {
+        font-size: 2.5rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
