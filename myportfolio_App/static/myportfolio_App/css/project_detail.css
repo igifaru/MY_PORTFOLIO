@@ -61,6 +61,7 @@
 
 .project-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
 }
 
@@ -80,6 +81,26 @@
 .btn-live:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(34, 211, 238, 0.4);
+}
+
+.btn-github {
+    padding: 1rem 2.5rem;
+    background-color: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-github:hover {
+    background-color: var(--accent);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
 }
 
 .btn-back {
@@ -105,5 +126,35 @@
 
     .project-info h1 {
         font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-detail-container {
+        padding: 2.5rem 6%;
+    }
+
+    .project-info h1 {
+        font-size: 1.9rem;
+    }
+
+    .short-desc {
+        font-size: 1.1rem;
+    }
+
+    .long-desc {
+        font-size: 1rem;
+    }
+
+    .project-actions {
+        flex-direction: column;
+    }
+
+    .btn-live,
+    .btn-github,
+    .btn-back {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
     }
 }

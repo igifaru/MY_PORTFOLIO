@@ -1,0 +1,30 @@
+<div class="portfolio-header">
+    <h1 class="portfolio-title">Latest <span>Project</span></h1>
+</div>
+
+<div class="portfolio-grid">
+    {% for project in projects %}
+    <div class="portfolio-item">
+        <div class="portfolio-image">
+            {% if project.image %}
+            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+            {% else %}
+            <img src="https://via.placeholder.com/600x400" alt="Placeholder">
+            {% endif %}
+        </div>
+        <div class="portfolio-overlay">
+            <div class="overlay-content">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description|truncatewords:20 }}</p>
+                <a href="{% url 'project_detail' project.pk %}" class="portfolio-link">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-projects">
+        <p>No projects to display yet. Add some in the <a href="/admin">Admin panel</a>!</p>
+    </div>
+    {% endfor %}
+</div>

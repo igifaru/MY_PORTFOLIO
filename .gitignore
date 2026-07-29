@@ -1,5 +1,6 @@
 # .gitignore
 venv/
+env/
 myport_env/
 *.pyc
 __pycache__/
@@ -7,3 +8,18 @@ db.sqlite3
 media/
 staticfiles/
 .env
+
+# AI agent / IDE tooling config — not part of the Django project itself
+CLAUDE.md
+AGENT.md
+.windsurfrules
+.mcp.json
+.jetro/
+.cursor/
+.agents/
+.github/
+
+# Credentials, wherever they show up
+credentials.json
+*.pem
+*.key

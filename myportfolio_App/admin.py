@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Project, Skill, Category, ContactMessage, Bio, Service
+from .models import Project, Skill, Category, ContactMessage, Bio, Certificate
 
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'icon_class', 'order')
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('title', 'institution', 'order')
     list_editable = ('order',)
-    
+    search_fields = ('title', 'institution')
+
     class Media:
         css = {
             'all': ('myportfolio_App/css/admin_custom.css',)
@@ -25,7 +26,8 @@ class SkillInline(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'skill_count')
+    list_display = ('name', 'order', 'skill_count')
+    list_editable = ('order',)
     search_fields = ('name',)
     inlines = [SkillInline]
 
@@ -41,7 +43,7 @@ class CategoryAdmin(admin.ModelAdmin):
 # --- 2. Skills ---
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'proficiency')
+    list_display = ('name', 'category')
     list_filter = ('category',)
     search_fields = ('name',)
 
@@ -56,14 +58,14 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'technology', 'display_image', 'link_exists')
     list_filter = ('technology',)
     search_fields = ('title', 'technology', 'description')
-    
+
     fieldsets = (
         ('Basic Information', {
             'fields': ('title', 'description', 'long_description', 'technology'),
         }),
         ('Media & Links', {
-            'fields': ('image', 'link'),
-            'description': 'Upload your project preview and provided a live URL or repository link.'
+            'fields': ('image', 'github_link', 'live_link'),
+            'description': 'Upload your project preview and provide a GitHub repository link and/or a live/deployed site link.'
         }),
     )
 
@@ -74,9 +76,9 @@ class ProjectAdmin(admin.ModelAdmin):
     display_image.short_description = 'Preview'
 
     def link_exists(self, obj):
-        return bool(obj.link)
+        return bool(obj.github_link or obj.live_link)
     link_exists.boolean = True
-    link_exists.short_description = 'Live Link'
+    link_exists.short_description = 'Has Link'
 
     class Media:
         css = {
@@ -106,7 +108,7 @@ class BioAdmin(admin.ModelAdmin):
             'fields': ('full_name', 'roles_list', 'hero_title', 'hero_subtitle'),
         }),
         ('About Section (About Page)', {
-            'fields': ('about_title_main', 'about_title_accent', 'about_role', 'bio_text'),
+            'fields': ('about_title_main', 'about_title_accent', 'about_role', 'bio_text', 'extra_bio_text'),
             'classes': ('wide',),
         }),
         ('Visuals & Experience', {
@@ -114,7 +116,7 @@ class BioAdmin(admin.ModelAdmin):
             'description': 'This image and CV will be accessible from your about and home sections.'
         }),
         ('Social Connections', {
-            'fields': ('github_link', 'linkedin_link', 'facebook_link', 'twitter_link', 'instagram_link'),
+            'fields': ('github_link', 'linkedin_link', 'facebook_link', 'twitter_link', 'instagram_link', 'whatsapp_link'),
             'description': 'Links to your professional and social profiles.'
         }),
     )

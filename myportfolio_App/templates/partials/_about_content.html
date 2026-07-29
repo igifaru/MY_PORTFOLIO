@@ -1,0 +1,134 @@
+<section class="about-hero">
+    <div class="bio-grid">
+        <!-- Left Side: Profile Image with Hexagon -->
+        <div class="bio-image">
+            <div class="hexagon-shape">
+                {% if bio.profile_image %}
+                <img src="{{ bio.profile_image.url }}" alt="{{ bio.full_name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/400" alt="Profile">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Side: Text Content -->
+        <div class="bio-content">
+            <h1 class="about-title">{{ bio.about_title_main }} <span>{{ bio.about_title_accent }}</span></h1>
+            <h2 class="about-role">{{ bio.about_role }}</h2>
+
+            <div class="bio-text-wrapper">
+                <p class="bio-text">
+                    {{ bio.bio_text }}
+                </p>
+                {% if bio.extra_bio_text %}
+                <p class="bio-text">
+                    {{ bio.extra_bio_text }}
+                </p>
+                {% endif %}
+            </div>
+
+            <div class="about-btns">
+                {% if bio.cv %}
+                <button type="button" class="btn-cv" id="cvBtn" aria-haspopup="dialog">My CV</button>
+                {% else %}
+                <a href="{% if request.resolver_match.url_name == 'home' %}#contact{% else %}{% url 'home' %}#contact{% endif %}" class="btn-cv">Hire Me</a>
+                {% endif %}
+                <button type="button" class="btn-cv" id="certBtn" aria-haspopup="dialog">Certificates</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if bio.cv %}
+<!-- CV Preview Modal -->
+<div class="modal-overlay" id="cvModalOverlay">
+    <div class="modal-box cv-modal-box" role="dialog" aria-modal="true" aria-labelledby="cvModalTitle">
+        <div class="modal-header">
+            <h3 id="cvModalTitle">My CV</h3>
+            <button type="button" class="modal-close" id="cvModalClose" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body cv-modal-body">
+            <iframe src="{% url 'cv_preview' %}#toolbar=0" class="cv-preview-frame" title="CV Preview"></iframe>
+            <a href="{{ bio.cv.url }}" class="btn-cv cv-download-btn" download>
+                <i class="fas fa-download"></i> Download CV (PDF)
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Certificates Modal -->
+<div class="modal-overlay" id="certModalOverlay">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+        <div class="modal-header">
+            <h3 id="certModalTitle">Certificates</h3>
+            <button type="button" class="modal-close" id="certModalClose" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+            {% for cert in certificates %}
+            <div class="cert-card">
+                <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                <div class="cert-info">
+                    <h4>{{ cert.title }}</h4>
+                    <p>{{ cert.institution }}</p>
+                </div>
+                <a href="{{ cert.file.url }}#toolbar=0" target="_blank" rel="noopener" class="cert-view-btn">
+                    <i class="fas fa-eye"></i> View
+                </a>
+            </div>
+            {% empty %}
+            <p class="no-certificates">No certificates uploaded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        function setupModal(btnId, overlayId, closeId) {
+            const btn = document.getElementById(btnId);
+            const overlay = document.getElementById(overlayId);
+            const closeBtn = document.getElementById(closeId);
+            if (!btn || !overlay) return;
+
+            function openModal() {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            btn.addEventListener('click', openModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+            });
+        }
+
+        setupModal('cvBtn', 'cvModalOverlay', 'cvModalClose');
+        setupModal('certBtn', 'certModalOverlay', 'certModalClose');
+    })();
+</script>
+
+<section id="skills" class="skills-section">
+    <h2 class="section-title">Technical Arsenal</h2>
+
+    <div class="skills-categories">
+        {% for category in categories %}
+        <div class="skill-category-block">
+            <h3 class="category-label">{{ category.name }}</h3>
+            <div class="skill-badges">
+                {% for skill in category.skills.all %}
+                <span class="skill-badge">{{ skill.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

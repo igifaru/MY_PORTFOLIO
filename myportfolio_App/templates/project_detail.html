@@ -22,17 +22,24 @@
             <span class="badge">{{ project.technology }}</span>
             <h1>{{ project.title }}</h1>
             <p class="short-desc">{{ project.description }}</p>
+            {% if project.long_description %}
             <div class="long-desc">
-                {{ project.long_description|default:project.description|linebreaks }}
+                {{ project.long_description|linebreaks }}
             </div>
+            {% endif %}
 
             <div class="project-actions">
-                {% if project.link %}
-                <a href="{{ project.link }}" target="_blank" class="btn-live">
+                {% if project.live_link %}
+                <a href="{{ project.live_link }}" target="_blank" rel="noopener" class="btn-live">
                     View Live <i class="fas fa-external-link-alt"></i>
                 </a>
                 {% endif %}
-                <a href="{% url 'portfolio' %}" class="btn-back">Back to Portfolio</a>
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" rel="noopener" class="btn-github">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                {% endif %}
+                <a href="{% url 'portfolio' %}" class="btn-back">Back to Projects</a>
             </div>
         </div>
     </div>

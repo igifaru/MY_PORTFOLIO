@@ -1,0 +1,24 @@
+<div class="contact-header">
+    <h1 class="section-title">Contact <span>Me!</span></h1>
+</div>
+
+<form method="POST" action="{% url 'contact' %}" class="contact-form">
+    {% csrf_token %}
+    <div class="form-grid">
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+    </div>
+    <div class="form-group full-width">
+        <input type="text" name="subject" placeholder="Email Subject" required>
+    </div>
+    <div class="form-group full-width">
+        <textarea name="message" rows="8" placeholder="Your Message" required></textarea>
+    </div>
+    <div class="form-submit">
+        <button type="submit" class="btn-send">Send Message</button>
+    </div>
+</form>

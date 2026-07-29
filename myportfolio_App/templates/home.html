@@ -3,9 +3,15 @@
 
 {% block title %}Home | NDUNGUTSE David{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/about.css' %}">
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/portfolio.css' %}">
+<link rel="stylesheet" href="{% static 'myportfolio_App/css/contact.css' %}">
+{% endblock %}
+
 {% block content %}
 <!-- Hero Section -->
-<header class="hero">
+<header class="hero" id="home">
     <div class="hero-container">
         <!-- Left Side: Text Content -->
         <div class="hero-content">
@@ -15,29 +21,6 @@
                     data-roles="{{ bio.roles_list }}"></span><span class="pen-icon"><i class="fas fa-pen"></i></span>
             </h3>
             <p class="hero-description">{{ bio.hero_subtitle }}</p>
-
-            <!-- Social Media Icons -->
-            <div class="social-icons">
-                {% if bio.facebook_link %}<a href="{{ bio.facebook_link }}" target="_blank"><i
-                        class="fab fa-facebook-f"></i></a>{% endif %}
-                {% if bio.twitter_link %}<a href="{{ bio.twitter_link }}" target="_blank"><i
-                        class="fab fa-twitter"></i></a>{% endif %}
-                {% if bio.instagram_link %}<a href="{{ bio.instagram_link }}" target="_blank"><i
-                        class="fab fa-instagram"></i></a>{% endif %}
-                {% if bio.linkedin_link %}<a href="{{ bio.linkedin_link }}" target="_blank"><i
-                        class="fab fa-linkedin-in"></i></a>{% endif %}
-                {% if bio.github_link %}<a href="{{ bio.github_link }}" target="_blank"><i
-                        class="fab fa-github"></i></a>{% endif %}
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="hero-btns">
-                {% if bio.cv %}
-                <a href="{{ bio.cv.url }}" class="btn-cv" download>Download CV</a>
-                {% else %}
-                <a href="{% url 'contact' %}" class="btn-cv">Hire Me</a>
-                {% endif %}
-            </div>
         </div>
 
         <!-- Right Side: Profile Image -->
@@ -53,41 +36,47 @@
     </div>
 </header>
 
-<!-- Project Grid Section -->
-<main id="projects" class="container">
-    <h2 class="section-title">Latest <span>Project</span></h2>
+<!-- About Section -->
+<section id="about" class="container">
+    {% include 'partials/_about_content.html' %}
+</section>
 
-    <div class="project-grid">
-        {% for project in projects %}
-        <div class="portfolio-item">
-            <div class="portfolio-image">
-                {% if project.image %}
-                <img src="{{ project.image.url }}" alt="{{ project.title }}">
-                {% else %}
-                <img src="https://via.placeholder.com/600x400" alt="Placeholder">
-                {% endif %}
-            </div>
-            <div class="portfolio-overlay">
-                <div class="overlay-content">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:20 }}</p>
-                    <a href="{% url 'project_detail' project.pk %}" class="portfolio-link">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="no-projects">No projects added yet. Head to the <a href="/admin">Admin panel</a> to add some!</p>
-        {% endfor %}
-    </div>
-</main>
+<!-- Portfolio Section -->
+<section id="project" class="container">
+    {% include 'partials/_portfolio_content.html' %}
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="container contact-container">
+    {% include 'partials/_contact_content.html' %}
+</section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Set active nav link
-    document.getElementById('nav-home').classList.add('active');
+    // Scroll-spy: highlight the nav link matching the section currently in view
+    (function () {
+        const sections = document.querySelectorAll('#home, #about, #project, #contact');
+        const navLinks = document.querySelectorAll('.nav-links a[id^="nav-"]');
+
+        function setActiveLink() {
+            let current = sections[0] ? sections[0].id : '';
+            const scrollPos = window.scrollY + 140;
+
+            sections.forEach((section) => {
+                if (scrollPos >= section.offsetTop) {
+                    current = section.id;
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.toggle('active', link.id === `nav-${current}`);
+            });
+        }
+
+        window.addEventListener('scroll', setActiveLink, { passive: true });
+        setActiveLink();
+    })();
 
     // Typewriter and Pen Animation Logic
     const typingSpan = document.querySelector('.typing-text');

@@ -1,5 +1,21 @@
 /* myportfolio_App/static/myportfolio_App/css/home.css */
 
+/* --- GLOBAL RESET (prevents padding/width from overflowing containers on any screen size) --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* --- THEME SYSTEM --- */
 :root {
     --bg-dark: #020617;
@@ -31,6 +47,7 @@ body {
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     margin: 0;
+    overflow-x: hidden;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -117,6 +134,11 @@ body * {
     color: var(--accent);
 }
 
+.nav-links li a.active {
+    color: var(--accent);
+    font-weight: 700;
+}
+
 /* --- Navigation Button --- */
 
 .btn-contact {
@@ -170,6 +192,16 @@ body * {
 
     .nav-links li a {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+
+    .logo {
+        font-size: 1.2rem;
     }
 }
 
@@ -329,34 +361,6 @@ html {
     margin-bottom: 2.5rem;
 }
 
-/* --- Social Icons --- */
-.social-icons {
-    display: flex;
-    gap: 1.2rem;
-    margin-bottom: 2.5rem;
-}
-
-.social-icons a {
-    width: 45px;
-    height: 45px;
-    border: 2px solid var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-size: 1.2rem;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.social-icons a:hover {
-    background-color: var(--accent);
-    color: var(--bg-dark);
-    box-shadow: 0 0 15px var(--accent);
-    transform: translateY(-5px);
-}
-
 /* --- Action Buttons --- */
 .btn-cv {
     display: inline-block;
@@ -438,12 +442,58 @@ html {
     }
 
     .hexagon-shape {
-        width: 300px;
-        height: 340px;
+        width: min(300px, 70vw);
+        height: min(340px, 78vw);
     }
 
     .hero-name {
         font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 60px 6% 40px;
+        min-height: unset;
+    }
+
+    .hero-container {
+        gap: 2rem;
+    }
+
+    .hexagon-shape {
+        width: min(220px, 65vw);
+        height: min(250px, 72vw);
+    }
+
+    .hero-greeting {
+        font-size: 1.15rem;
+    }
+
+    .hero-name {
+        font-size: 2.1rem;
+    }
+
+    .hero-role-wrapper {
+        font-size: 1.3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .btn-cv {
+        padding: 0.9rem 1.5rem;
+    }
+
+    .container {
+        padding: 50px 16px;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
     }
 }
 
@@ -664,5 +714,25 @@ html {
         flex-direction: column;
         gap: 2rem;
         text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 4rem 0 2rem;
+    }
+
+    .footer-logo {
+        font-size: 1.8rem;
+    }
+
+    .footer-tagline {
+        font-size: 1rem;
+    }
+
+    .footer-socials a {
+        width: 42px;
+        height: 42px;
+        font-size: 1.05rem;
     }
 }

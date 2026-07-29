@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Link Global Styles -->
     <link rel="stylesheet" href="{% static 'myportfolio_App/css/home.css' %}">
@@ -20,7 +20,7 @@
     <!-- Theme Initialization Script -->
     <script>
         (function () {
-            const theme = localStorage.getItem('theme') || 'dark';
+            const theme = localStorage.getItem('theme') || 'light';
             if (theme === 'light') {
                 document.documentElement.classList.add('light-mode');
             }
@@ -40,11 +40,10 @@
         </div>
 
         <ul class="nav-links" id="nav-links">
-            <li><a href="{% url 'home' %}" id="nav-home">Home</a></li>
-            <li><a href="{% url 'about' %}" id="nav-about">About</a></li>
-            <li><a href="{% url 'services' %}" id="nav-services">Services</a></li>
-            <li><a href="{% url 'portfolio' %}" id="nav-portfolio">Portfolio</a></li>
-            <li><a href="{% url 'contact' %}" id="nav-contact">Contact</a></li>
+            <li><a href="{% url 'home' %}#home" id="nav-home">Home</a></li>
+            <li><a href="{% url 'home' %}#about" id="nav-about">About</a></li>
+            <li><a href="{% url 'home' %}#project" id="nav-project">Projects</a></li>
+            <li><a href="{% url 'home' %}#contact" id="nav-contact">Contact</a></li>
 
             <!-- Theme Toggle -->
             <li class="theme-toggle-container">
@@ -93,11 +92,13 @@
                     {% if bio.facebook_link %}<a href="{{ bio.facebook_link }}" target="_blank"><i
                             class="fab fa-facebook-f"></i></a>{% endif %}
                     {% if bio.twitter_link %}<a href="{{ bio.twitter_link }}" target="_blank"><i
-                            class="fab fa-twitter"></i></a>{% endif %}
+                            class="fab fa-x-twitter"></i></a>{% endif %}
                     {% if bio.instagram_link %}<a href="{{ bio.instagram_link }}" target="_blank"><i
                             class="fab fa-instagram"></i></a>{% endif %}
                     {% if bio.linkedin_link %}<a href="{{ bio.linkedin_link }}" target="_blank"><i
                             class="fab fa-linkedin-in"></i></a>{% endif %}
+                    {% if bio.whatsapp_link %}<a href="{{ bio.whatsapp_link }}" target="_blank"><i
+                            class="fab fa-whatsapp"></i></a>{% endif %}
                     {% if bio.github_link %}<a href="{{ bio.github_link }}" target="_blank"><i
                             class="fab fa-github"></i></a>{% endif %}
                 </div>

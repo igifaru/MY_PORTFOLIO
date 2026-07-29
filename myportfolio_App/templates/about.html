@@ -9,61 +9,7 @@
 
 {% block content %}
 <main class="container">
-    <section class="about-hero">
-        <div class="bio-grid">
-            <!-- Left Side: Profile Image with Hexagon -->
-            <div class="bio-image">
-                <div class="hexagon-shape">
-                    {% if bio.profile_image %}
-                    <img src="{{ bio.profile_image.url }}" alt="{{ bio.full_name }}">
-                    {% else %}
-                    <img src="https://via.placeholder.com/400" alt="Profile">
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Right Side: Text Content -->
-            <div class="bio-content">
-                <h1 class="about-title">{{ bio.about_title_main }} <span>{{ bio.about_title_accent }}</span></h1>
-                <h2 class="about-role">{{ bio.about_role }}</h2>
-
-                <div class="bio-text-wrapper">
-                    <p class="bio-text">
-                        {{ bio.bio_text }}
-                    </p>
-                </div>
-
-                <div class="about-btns">
-                    <a href="#skills" class="btn-read-more">Read More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="skills-section">
-        <h2 class="section-title">Technical Arsenal</h2>
-
-        <div class="skills-grid">
-            {% for category in categories %}
-            <div class="category-column">
-                <h3 class="category-label">{{ category.name }}</h3>
-                <div class="skills-stack">
-                    {% for skill in category.skills.all %}
-                    <div class="skill-card">
-                        <div class="skill-info">
-                            <span class="skill-name">{{ skill.name|title }}</span>
-                            <span class="skill-perc">{{ skill.proficiency }}%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="--proficiency: {{ skill.proficiency }}%;"></div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+    {% include 'partials/_about_content.html' %}
 </main>
 {% endblock %}
 
