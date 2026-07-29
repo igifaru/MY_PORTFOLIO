@@ -24,12 +24,13 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c5*05f-v5$qosl@2x+5m3r-o4lkh^_*^^w510uzh6+gjy1-vnu'
+# Falls back to the original dev key locally; PythonAnywhere must set a real SECRET_KEY in .env.
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c5*05f-v5$qosl@2x+5m3r-o4lkh^_*^^w510uzh6+gjy1-vnu')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
 
 # Application definition
@@ -77,24 +78,13 @@ WSGI_APPLICATION = 'myportfolio.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# myportfolio/settings.py
-
+#
+# SQLite — chosen because PythonAnywhere's free tier doesn't offer PostgreSQL
+# (only MySQL or SQLite), and SQLite needs zero extra setup on either platform.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portifolio',         # Your database name
-        'USER': 'postgres',           # Your username
-        'PASSWORD': 'newsecurepassword123',            # Your password
-        'HOST': '127.0.0.1',          # Use 'localhost' or '127.0.0.1' for local
-        'PORT': '5432',               # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -142,6 +132,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     # Optional: if you have a global static folder
 ]
+
+# Where `collectstatic` gathers files for production hosting (e.g. PythonAnywhere's
+# static files mapping). Not used in local dev (runserver serves from STATICFILES_DIRS/apps).
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 
