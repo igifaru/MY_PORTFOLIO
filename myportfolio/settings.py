@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'myportfolio_App',
 ]
 
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'myportfolio_App.context_processors.seo_schema',
             ],
         },
     },
@@ -159,4 +161,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # The inbox that contact form submissions get forwarded to.
 CONTACT_RECIPIENT_EMAIL = os.environ.get('CONTACT_RECIPIENT_EMAIL', 'igifarudavid@gmail.com')
+
+# Google Search Console ownership verification token (not a secret — Google's crawler
+# reads it directly from the page). Leave unset locally; only needed in production.
+GOOGLE_SITE_VERIFICATION = os.environ.get('GOOGLE_SITE_VERIFICATION', '')
 

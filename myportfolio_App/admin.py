@@ -119,6 +119,10 @@ class BioAdmin(admin.ModelAdmin):
             'fields': ('github_link', 'linkedin_link', 'facebook_link', 'twitter_link', 'instagram_link', 'whatsapp_link'),
             'description': 'Links to your professional and social profiles.'
         }),
+        ('SEO', {
+            'fields': ('meta_description',),
+            'description': 'Controls how the site appears in Google search results and when shared on social media.'
+        }),
     )
 
     def has_image(self, obj):

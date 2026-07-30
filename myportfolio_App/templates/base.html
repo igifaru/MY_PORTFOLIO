@@ -5,7 +5,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Portfolio | NDUNGUTSE David{% endblock %}</title>
+    <title>{% block title %}{{ bio.full_name|default:"NDUNGUTSE David" }} | Full-Stack Developer & AI Engineer{% endblock %}</title>
+
+    {% block meta_description %}<meta name="description" content="{{ bio.meta_description|default:bio.hero_subtitle|default:'Portfolio of a Full-Stack Developer and AI Engineer building web applications and machine learning systems.' }}">{% endblock %}
+    <meta name="keywords" content="{{ bio.full_name }}, {{ bio.about_role }}, portfolio, full stack developer, AI engineer, Rwanda developer">
+    <meta name="author" content="{{ bio.full_name }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}">{% endif %}
+
+    <!-- Open Graph / social share preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ bio.full_name }} | Full-Stack Developer & AI Engineer{% endblock %}">
+    <meta property="og:description" content="{{ bio.meta_description|default:bio.hero_subtitle }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% if bio.profile_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ bio.profile_image.url }}">{% endif %}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ bio.full_name }} | Full-Stack Developer & AI Engineer">
+    <meta name="twitter:description" content="{{ bio.meta_description|default:bio.hero_subtitle }}">
+    {% if bio.profile_image %}<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ bio.profile_image.url }}">{% endif %}
+
+    <!-- Structured data: tells search engines this page is about a specific person -->
+    <script type="application/ld+json">{{ person_schema_json|safe }}</script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

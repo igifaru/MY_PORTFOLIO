@@ -87,6 +87,12 @@ class Bio(models.Model):
         blank=True,
         help_text="Short personal paragraph revealed when a visitor clicks 'Read More' on the About section."
     )
+    meta_description = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Shown in Google search results and when the site is shared on social media. "
+                   "Keep it under ~160 characters. Falls back to the hero subtitle if left blank."
+    )
     profile_image = models.ImageField(upload_to='profile/', blank=True, null=True)
     github_link = models.URLField(blank=True)
     linkedin_link = models.URLField(blank=True)

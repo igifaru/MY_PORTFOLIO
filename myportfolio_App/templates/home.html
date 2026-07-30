@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home | NDUNGUTSE David{% endblock %}
+{% block title %}{{ bio.full_name|default:"NDUNGUTSE David" }} | Full-Stack Developer & AI Engineer{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'myportfolio_App/css/about.css' %}">
